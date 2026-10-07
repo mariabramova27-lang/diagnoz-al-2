@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Цифровой Отпечаток · ЕГЭ на Максимум</title>
+<meta name="description" content="Диагностика по алгебре. Онлайн-школа «Мягкая математика».">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════
+   ПЕРЕМЕННЫЕ
+   ═══════════════════════════════════════════════════════ */
+:root{
+  --bg:#0F1A2E;
+  --bg2:#152238;
+  --teal:#2AB7A9;
+  --gold:#F4A261;
+  --white:#FFFFFF;
+  --gray:#8A9BA8;
+  --green:#4CAF50;
+  --yellow:#FFC107;
+  --red:#E53935;
+  --radius:16px;
+  --shadow:0 8px 32px rgba(0,0,0,.4);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'Open Sans',sans-serif;
+  background:var(--bg);
+  color:var(--white);
+  overflow-x:hidden;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ═══════════════════════════════════════════════════════
+   РЕКЛАМНЫЙ СЛОЙ (фон)
+   ═══════════════════════════════════════════════════════ */
+.ad-layer{
+  position:fixed;inset:0;
+  pointer-events:none;
+  z-index:1;
+  opacity:.1;
+  animation:adPulse 6s ease-in-out infinite;
+}
+.ad-layer a{
+  pointer-events:auto;
+  color:var(--teal);
+  text-decoration:none;
+  font-size:13px;
+  transition:.3s;
+}
+.ad-layer a:hover{
+  color:var(--gold);
+  text-shadow:0 0 12px var(--teal);
+}
+.ad-logo{
+  position:absolute;top:20px;left:20px;
+  font-family:'Montserrat',sans-serif;
+  font-weight:700;font-size:14px;
+  color:var(--teal);
+  display:flex;align-items:center;gap:8px;
+}
+.ad-dot{
+  width:10px;height:10px;border-radius:50%;
+  background:var(--teal);
+  box-shadow:0 0 12px var(--teal);
+}
+.ad-crystals{
+  position:absolute;top:20px;right:20px;
+  color:var(--gold);font-weight:700;
+  font-family:'Montserrat',sans-serif;
+}
+.ad-oge{position:absolute;bottom:24px;left:24px;max-width:280px}
+.ad-maria{position:absolute;bottom:24px;right:24px;max-width:280px;text-align:right}
+.ad-watermark{
+  position:absolute;top:50%;
+  transform:translateY(-50%) rotate(-90deg);
+  font-family:'Montserrat',sans-serif;
+  font-size:11px;letter-spacing:4px;
+  color:var(--teal);
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+.ad-watermark.left{left:-40px}
+.ad-watermark.right{right:-40px}
+
+@keyframes adPulse{
+  0%,100%{opacity:.08}
+  50%{opacity:.14}
+}
+
+/* ═══════════════════════════════════════════════════════
+   ОСНОВНОЙ КОНТЕНТ
+   ═══════════════════════════════════════════════════════ */
+.main-content{
+  position:relative;
+  z-index:10;
+  min-height:100vh;
+}
+
+.topbar{
+  position:fixed;top:0;left:0;right:0;
+  z-index:20;
+  padding:14px 24px;
+  display:flex;align-items:center;gap:20px;
+  background:rgba(15,26,46,.85);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(42,183,169,.2);
+}
+.progress{
+  flex:1;height:6px;
+  background:rgba(255,255,255,.08);
+  border-radius:3px;overflow:hidden;
+}
+.progress-fill{
+  height:100%;width:8%;
+  background:linear-gradient(90deg,var(--teal),var(--gold));
+  transition:width .5s ease;
+}
+.crystals{
+  font-family:'Montserrat',sans-serif;
+  font-weight:700;color:var(--gold);
+  font-size:16px;
+  white-space:nowrap;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ЭКРАНЫ
+   ═══════════════════════════════════════════════════════ */
+.screen{
+  display:none;
+  min-height:100vh;
+  padding:100px 24px 80px;
+  animation:fadeIn .5s ease;
+}
+.screen.active{display:block}
+.screen-inner{
+  max-width:900px;margin:0 auto;
+}
+.screen-inner.center{text-align:center}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ═══════════════════════════════════════════════════════
+   ТИТУЛ
+   ═══════════════════════════════════════════════════════ */
+.title-main{
+  font-family:'Montserrat',sans-serif;
+  font-weight:800;
+  font-size:clamp(32px,6vw,64px);
+  letter-spacing:2px;
+  background:linear-gradient(135deg,var(--teal),var(--gold));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  margin:24px 0 16px;
+}
+.subtitle{
+  font-size:clamp(14px,2vw,20px);
+  color:var(--teal);
+  margin-bottom:8px;
+  font-weight:600;
+}
+.meta{
+  color:var(--gray);
+  font-size:14px;
+  margin-bottom:40px;
+}
+.tower-bg{
+  width:180px;height:240px;
+  margin:0 auto 20px;
+  background:linear-gradient(180deg,var(--teal),var(--gold));
+  clip-path:polygon(50% 0,70% 20%,60% 20%,80% 40%,70% 40%,90% 60%,80% 60%,100% 80%,0 80%,20% 60%,10% 60%,30% 40%,20% 40%,40% 20%,30% 20%);
+  opacity:.7;
+  filter:drop-shadow(0 0 40px rgba(42,183,169,.5));
+  animation:float 4s ease-in-out infinite;
+}
+.tower-final{
+  width:140px;height:200px;
+  margin:0 auto 30px;
+  background:linear-gradient(180deg,var(--gold),var(--teal));
+  clip-path:polygon(50% 0,70% 20%,60% 20%,80% 40%,70% 40%,90% 60%,80% 60%,100% 80%,0 80%,20% 60%,10% 60%,30% 40%,20% 40%,40% 20%,30% 20%);
+  filter:drop-shadow(0 0 40px rgba(244,162,97,.6));
+  animation:float 4s ease-in-out infinite;
+}
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-12px)}
+}
+
+/* ═══════════════════════════════════════════════════════
+   КНОПКИ
+   ═══════════════════════════════════════════════════════ */
+.btn{
+  display:inline-block;
+  font-family:'Montserrat',sans-serif;
+  font-weight:700;
+  font-size:16px;
+  padding:16px 40px;
+  border:none;border-radius:var(--radius);
+  cursor:pointer;
+  transition:.3s;
+  margin-top:32px;
+  text-decoration:none;
+  text-align:center;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--teal),#1e8a7f);
+  color:var(--white);
+  box-shadow:0 8px 24px rgba(42,183,169,.35);
+}
+.btn-primary:hover{
+  transform:translateY(-3px);
+  box-shadow:0 12px 32px rgba(42,183,169,.55);
+}
+.btn-gold{
+  background:linear-gradient(135deg,var(--gold),#d4803f);
+  color:var(--bg);
+  box-shadow:0 8px 24px rgba(244,162,97,.35);
+}
+.btn-gold:hover{transform:translateY(-3px)}
+.btn-ghost{
+  background:transparent;
+  border:2px solid var(--teal);
+  color:var(--teal);
+}
+.btn-ghost:hover{background:rgba(42,183,169,.1)}
+
+/* ═══════════════════════════════════════════════════════
+   ПРИВЕТСТВИЕ ГЕРОЕВ
+   ═══════════════════════════════════════════════════════ */
+.heroes{
+  display:flex;justify-content:space-between;
+  gap:24px;margin-bottom:40px;
+  flex-wrap:wrap;
+}
+.hero{
+  flex:1;min-width:200px;
+  text-align:center;
+  padding:24px;
+  background:rgba(42,183,169,.05);
+  border:1px solid rgba(42,183,169,.2);
+  border-radius:var(--radius);
+  transition:.3s;
+}
+.hero:hover{
+  border-color:var(--teal);
+  box-shadow:0 0 32px rgba(42,183,169,.25);
+}
+.hero-avatar{
+  font-size:64px;margin-bottom:12px;
+  filter:drop-shadow(0 0 20px rgba(42,183,169,.6));
+}
+.hero-name{
+  font-family:'Montserrat',sans-serif;
+  font-weight:700;color:var(--teal);
+}
+.dialogue{
+  background:rgba(255,255,255,.02);
+  border-left:3px solid var(--teal);
+  padding:24px;border-radius:var(--radius);
+  margin-bottom:24px;
+}
+.line{margin-bottom:16px}
+.line:last-child{margin-bottom:0}
+.line-arif{border-left-color:var(--gold);padding-left:0}
+.speaker{
+  font-family:'Montserrat',sans-serif;
+  font-weight:700;color:var(--gold);
+  display:block;margin-bottom:6px;
+}
+.text{color:rgba(255,255,255,.9)}
+
+/* ═══════════════════════════════════════════════════════
+   ЛЕГЕНДА
+   ═══════════════════════════════════════════════════════ */
+.title-sec{
+  font-family:'Montserrat',sans-serif;
+  font-weight:800;
+  font-size:clamp(24px,4vw,36px);
+  color:var(--teal);
+  margin-bottom:24px;
+}
+.tower-map{
+  display:flex;flex-direction:column-reverse;
+  gap:8px;margin:32px 0;
+}
+.floor{
+  padding:14px 20px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(42,183,169,.15);
+  border-radius:12px;
+  font-size:15px;
+  transition:.3s;
+}
+.floor:hover{
+  background:rgba(42,183,169,.1);
+  transform:translateX(6px);
+}
+.active-floor{
+  background:linear-gradient(90deg,rgba(42,183,169,.2),transparent);
+  border-color:var(--teal);
+  font-weight:700;
+}
+.peak{
+  background:linear-gradient(90deg,rgba(244,162,97,.2),transparent);
+  border-color:var(--gold);
+  color:var(--gold);
+  font-weight:700;
+  text-align:center;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ПРАВИЛА
+   ═══════════════════════════════════════════════════════ */
+.rules{display:flex;flex-direction:column;gap:16px;margin:32px 0}
+.rule{
+  display:flex;align-items:center;gap:20px;
+  padding:20px;
+  background:rgba(255,255,255,.03);
+  border-radius:var(--radius);
+  border-left:3px solid var(--teal);
+  transition:.3s;
+}
+.rule:hover{background:rgba(42,183,169,.08)}
+.rule-num{
+  font-family:'Montserrat',sans-serif;
+  font-weight:800;font-size:24px;
+  color:var(--gold);min-width:40px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ДИАГНОСТИКА
+   ═══════════════════════════════════════════════════════ */
+.block-header{
+  display:flex;justify-content:space-between;
+  align-items:center;gap:16px;
+  flex-wrap:wrap;margin-bottom:16px;
+}
+.timer{
+  font-family:'Montserrat',sans-serif;
+  font-weight:700;font-size:24px;
+  color:var(--teal);
+  padding:8px 20px;
+  background:rgba(42,183,169,.1);
+  border-radius:12px;
+  border:1px solid rgba(42,183,169,.3);
+}
+.timer.danger{color:var(--red);border-color:var(--red);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.block-desc{color:var(--gray);margin-bottom:24px}
+
+.tasks{display:flex;flex-direction:column;gap:16px;margin:24px 0}
+.task{
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(42,183,169,.15);
+  border-radius:var(--radius);
+  padding:20px;
+  transition:.3s;
+}
+.task.correct{border-color:var(--green);background:rgba(76,175,80,.08)}
+.task.wrong{border-color:var(--yellow);background:rgba(255,193,7,.08)}
+.task.skipped{border-color:var(--gray);background:rgba(138,155,168,.08)}
+.task-num{
+  font-family:'Montserrat',sans-serif;
+  font-weight:700;color:var(--gold);
+  font-size:14px;margin-bottom:8px;
+}
+.task-q{margin-bottom:14px;font-size:16px}
+.task-input{
+  display:flex;gap:12px;align-items:center;flex-wrap:wrap;
+}
+.task-input input{
+  flex:1;min-width:200px;
+  padding:12px 16px;
+  background:rgba(0,0,0,.3);
+  border:1px solid rgba(42,183,169,.3);
+  border-radius:10px;
+  color:var(--white);
+  font-family:'Open Sans',sans-serif;
+  font-size:15px;
+  outline:none;
+  transition:.3s;
+}
+.task-input input:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(42,183,169,.15)}
+.task-input button{
+  padding:12px 24px;
+  background:var(--teal);
+  border:none;border-radius:10px;
+  color:var(--white);
+  font-family:'Montserrat',sans-serif;
+  font-weight:700;
+  cursor:pointer;
+  transition:.3s;
+}
+.task-input button:hover{background:#1e8a7f}
+.task-feedback{
+  margin-top:10px;font-size:14px;
+  font-weight:600;
+}
+.task-feedback.ok{color:var(--green)}
+.task-feedback.no{color:var(--yellow)}
+.task-feedback.skip{color:var(--gray)}
+
+/* ═══════════════════════════════════════════════════════
+   КАРТА ПРОБЕЛОВ
+   ═══════════════════════════════════════════════════════ */
+.gaps{display:flex;flex-direction:column;gap:14px;margin:24px 0}
+.gap-row{
+  display:grid;
+  grid-template-columns:1fr auto auto;
+  gap:16px;align-items:center;
+  padding:16px 20px;
+  background:rgba(255,255,255,.03);
+  border-radius:var(--radius);
+  border:1px solid rgba(42,183,169,.15);
+}
+.gap-name{font-weight:600}
+.gap-score{color:var(--gray);font-size:14px}
+.gap-select{
+  display:flex;gap:8px;
+}
+.gap-btn{
+  width:44px;height:44px;
+  border-radius:50%;
+  border:2px solid transparent;
+  background:rgba(255,255,255,.05);
+  color:var(--white);
+  font-size:18px;
+  cursor:pointer;
+  transition:.3s;
+}
+.gap-btn:hover{transform:scale(1.1)}
+.gap-btn.active[data-level="green"]{background:var(--green);border-color:var(--green)}
+.gap-btn.active[data-level="yellow"]{background:var(--yellow);border-color:var(--yellow)}
+.gap-btn.active[data-level="red"]{background:var(--red);border-color:var(--red)}
+.gap-summary{
+  display:flex;justify-content:space-between;
+  padding:20px;margin-top:16px;
+  background:rgba(244,162,97,.08);
+  border:1px solid rgba(244,162,97,.3);
+  border-radius:var(--radius);
+  font-family:'Montserrat',sans-serif;
+  flex-wrap:wrap;gap:12px;
+}
+.gap-summary b{color:var(--gold)}
+
+/* ═══════════════════════════════════════════════════════
+   ПЛАН
+   ═══════════════════════════════════════════════════════ */
+#planInput{
+  width:100%;
+  padding:20px;
+  background:rgba(0,0,0,.3);
+  border:1px solid rgba(42,183,169,.3);
+  border-radius:var(--radius);
+  color:var(--white);
+  font-family:'Open Sans',sans-serif;
+  font-size:16px;
+  resize:vertical;
+  outline:none;
+  transition:.3s;
+}
+#planInput:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(42,183,169,.15)}
+.reward{
+  margin-top:20px;padding:16px 24px;
+  background:rgba(76,175,80,.15);
+  border:1px solid var(--green);
+  border-radius:var(--radius);
+  color:var(--green);
+  font-weight:700;
+  text-align:center;
+}
+.hidden{display:none}
+
+/* ═══════════════════════════════════════════════════════
+   СЛОВО О ПРЕОДОЛЕНИИ
+   ═══════════════════════════════════════════════════════ */
+.quote{
+  font-size:clamp(16px,2.2vw,20px);
+  line-height:1.8;
+  color:rgba(255,255,255,.9);
+  max-width:700px;
+  margin:0 auto 24px;
+  padding:32px;
+  background:rgba(42,183,169,.05);
+  border-left:4px solid var(--teal);
+  border-radius:var(--radius);
+  text-align:left;
+}
+.quote cite{
+  display:block;margin-top:20px;
+  color:var(--gold);
+  font-family:'Montserrat',sans-serif;
+  font-weight:700;
+  font-style:normal;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ДЗ
+   ═══════════════════════════════════════════════════════ */
+.hw{display:flex;flex-direction:column;gap:12px;margin:24px 0}
+.hw-item{
+  display:flex;align-items:center;gap:16px;
+  padding:16px 20px;
+  background:rgba(255,255,255,.03);
+  border-radius:12px;
+  border-left:3px solid var(--teal);
+}
+.hw-item span{
+  font-family:'Montserrat',sans-serif;
+  font-weight:800;color:var(--gold);
+  min-width:36px;
+}
+.hw-item.bonus{
+  border-left-color:var(--gold);
+  background:rgba(244,162,97,.08);
+}
+.next-lesson{
+  padding:20px;
+  background:rgba(42,183,169,.08);
+  border-radius:var(--radius);
+  margin:24px 0;
+  text-align:center;
+}
+.next-lesson .date{color:var(--gold);font-weight:700;margin-top:8px}
+.final-cta{
+  text-align:center;
+  padding:32px 20px;
+  margin:32px 0;
+  background:rgba(42,183,169,.05);
+  border:1px solid rgba(42,183,169,.2);
+  border-radius:var(--radius);
+}
+.final-quote{
+  font-family:'Montserrat',sans-serif;
+  font-size:clamp(20px,3vw,28px);
+  font-weight:800;
+  color:var(--gold);
+  margin-bottom:8px;
+}
+.final-sign{color:var(--gray);margin-bottom:24px}
+.cta-links{
+  display:flex;gap:16px;justify-content:center;
+  flex-wrap:wrap;
+}
+.cta-links .btn{margin-top:0;font-size:14px;padding:14px 28px}
+
+/* ═══════════════════════════════════════════════════════
+   МОБИЛЬНАЯ АДАПТАЦИЯ
+   ═══════════════════════════════════════════════════════ */
+@media (max-width:768px){
+  .ad-oge,.ad-maria,.ad-watermark{display:none}
+  .ad-logo,.ad-crystals{font-size:12px}
+  .screen{padding:90px 16px 60px}
+  .topbar{padding:10px 16px}
+  .btn{font-size:14px;padding:14px 28px;width:100%}
+  .heroes{flex-direction:column}
+  .gap-row{grid-template-columns:1fr;gap:12px}
+  .gap-select{justify-content:center}
+  .gap-summary{flex-direction:column;text-align:center}
+  .cta-links{flex-direction:column}
+  .cta-links .btn{width:100%}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════
+     РЕКЛАМНЫЙ СЛОЙ
+     ═══════════════════════════════════════════════════════ -->
+<div class="ad-layer" aria-hidden="true">
+  <div class="ad-logo">
+    <span class="ad-dot"></span>Мягкая математика
+  </div>
+  <div class="ad-crystals">
+    💎 <span id="adCrystals">0</span>
+  </div>
+  <div class="ad-oge">
+    <a href="https://vk.com/smartskillsmaria" target="_blank" rel="noopener">
+      Подготовка к ОГЭ/ЕГЭ по математике →
+    </a>
+  </div>
+  <div class="ad-maria">
+    <a href="https://vk.com/im/convo/-229273902?entrypoint=community_page&tab=all" target="_blank" rel="noopener">
+      Записаться на курс → Мария Абрамова
+    </a>
+  </div>
+  <div class="ad-watermark left">Мягкая математика</div>
+  <div class="ad-watermark right">ЕГЭ на Максимум</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     ОСНОВНОЙ КОНТЕНТ
+     ═══════════════════════════════════════════════════════ -->
+<main class="main-content">
+
+  <header class="topbar">
+    <div class="progress">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div class="crystals">💎 <span id="crystalCount">0</span></div>
+  </header>
+
+  <!-- ЭКРАН 1: ТИТУЛ -->
+  <section class="screen active" data-screen="1">
+    <div class="screen-inner center">
+      <div class="tower-bg"></div>
+      <h1 class="title-main">ЦИФРОВОЙ ОТПЕЧАТОК</h1>
+      <p class="subtitle">Врата Познания · Этаж 1 · Диагностика по алгебре</p>
+      <p class="meta">Орден Максимума · 2026–2027</p>
+      <button class="btn btn-primary" data-next="2">Войти в Врата</button>
+    </div>
+  </section>
+
+  <!-- ЭКРАН 2: ПРИВЕТСТВИЕ ГЕРОЕВ -->
+  <section class="screen" data-screen="2">
+    <div class="screen-inner">
+      <div class="heroes">
+        <div class="hero">
+          <div class="hero-avatar">🧙‍♂️</div>
+          <div class="hero-name">Профессор Мягкий</div>
+        </div>
+        <div class="hero">
+          <div class="hero-avatar">🤖</div>
+          <div class="hero-name">Арифмос</div>
+        </div>
+      </div>
+      <div class="dialogue">
+        <div class="line">
+          <span class="speaker">Профессор Мягкий:</span>
+          <span class="text">«Приветствую, рекрут. Сегодня ты не сдаёшь экзамен. Ты проходишь Цифровой Отпечаток. Это не приговор. Это карта.»</span>
+        </div>
+        <div class="line">
+          <span class="speaker">Арифмос:</span>
+          <span class="text">«Я — Арифмос, бортовой ИИ Ордена. 4 зоны. 25 заданий. 55 минут. Готов? Тогда начинаем.»</span>
+        </div>
+      </div>
+      <button class="btn btn-primary" data-next="3">Готов</button>
+    </div>
+  </section>
+
+  <!-- ЭКРАН 3: ЛЕГЕНДА -->
+  <section class="screen" data-screen="3">
+    <div class="screen-inner">
+      <h2 class="title-sec">Легенда Ордена</h2>
+      <p class="text">Королевство Математика — осаждённая крепость разума. Энтропия стирает порядок. Орден Максимума — последний бастион.</p>
+      <div class="tower-map">
+        <div class="floor">🏛️ Этаж 6 · Храм Теории Чисел · №19</div>
+        <div class="floor">🪞 Этаж 5 · Зеркальный Зал Параметров · №18</div>
+        <div class="floor">🌀 Этаж 4 · Лабиринт Стереометрии · №14</div>
+        <div class="floor">💰 Этаж 3 · Золотая Биржа · №15/16</div>
+        <div class="floor">📐 Этаж 2 · Пещера Планиметрии · №16</div>
+        <div class="floor active-floor">🏰 Этаж 1 · Врата Познания · Теория</div>
+        <div class="floor peak">🏆 Вершина: 80+ баллов</div>
+      </div>
+      <button class="btn btn-primary" data-next="4">Дальше</button>
+    </div>
+  </section>
+
+  <!-- ЭКРАН 4: ПРАВИЛА -->
+  <section class="screen" data-screen="4">
+    <div class="screen-inner">
+      <h2 class="title-sec">Правила диагностики</h2>
+      <div class="rules">
+        <div class="rule"><span class="rule-num">01</span>Честность выше правильного ответа. Это карта, а не экзамен.</div>
+        <div class="rule"><span class="rule-num">02</span>Не знаешь — ставь прочерк. Это тоже данные.</div>
+        <div class="rule"><span class="rule-num">03</span>Не подглядывай. Ложная карта = ложный маршрут.</div>
+        <div class="rule"><span class="rule-num">04</span>Время фиксировано. Хранитель Времени следит.</div>
+      </div>
+      <button class="btn btn-primary" data-next="5">Принять правила</button>
+    </div>
+  </section>
+
+  <!-- ЭКРАН 5: БАЗОВАЯ АЛГЕБРА -->
+  <section class="screen" data-screen="5">
+    <div class="screen-inner">
+      <div class="block-header">
+        <h2 class="title-sec">Уровень 1 · Фундамент</h2>
+        <div class="timer" data-time="900">15:00</div>
+      </div>
+      <p class="block-desc">Уравнения, неравенства, функции. 10 заданий. 15 минут.</p>
+      <div class="tasks" id="tasks-algebra"></div>
+      <button class="btn btn-primary" data-next="6">Продолжить</button>
+    </div>
+  </section>
+
+  <!-- ЭКРАН 6: ЭКОНОМИКА -->
+  <section class="screen" data-screen="6">
+    <div class="screen-inner">
+      <div class="block-header">
+        <h2 class="title-sec">Уровень 2 · Золотая Биржа</h2>
+        <div class="timer" data-time="600">10:00</div>
+      </div>
+      <p class="block-desc">Вклады, кредиты, оптимизация. 5 заданий. 10 минут.</p>
+      <div class="tasks" id="tasks-economy"></div>
+      <button class="btn btn-primary" data-next="7">Продолжить</button>
+    </div>
+  </section>
+
+  <!-- ЭКРАН 7: ПАРАМЕТР -->
+  <section class="screen" data-screen="7">
+    <div class="screen-inner">
+      <div class="block-header">
+        <h2 class="title-sec">Уровень 3 · Зеркальный Зал</h2>
+        <div class="timer" data-time="900">15:00</div>
+      </div>
+      <p class="block-desc">Параметр меняет реальность. 5 заданий. 15 минут.</p>
+      <div class="tasks" id="tasks-param"></div>
+      <button class="btn btn-primary" data-next="8">Продолжить</button>
+    </div>
+  </section>
+
+  <!-- ЭКРАН 8: ТЕОРИЯ ЧИСЕЛ -->
+  <section class="screen" data-screen="8">
+    <div class="screen-inner">
+      <div class="block-header">
+        <h2 class="title-sec">Уровень 4 · Храм Теории Чисел</h2>
+        <div class="timer" data-time="900">15:00</div>
+      </div>
+      <p class="block-desc">Делимость, остатки, логика. 5 заданий. 15 минут.</p>
+      <div class="tasks" id="tasks-numbers"></div>
+      <button class="btn btn-primary" data-next="9">Продолжить</button>
+    </div>
+  </section>
+
+  <!-- ЭКРАН 9: КАРТА ПРОБЕЛОВ -->
+  <section class="screen" data-screen="9">
+    <div class="screen-inner">
+      <h2 class="title-sec">Карта пробелов</h2>
+      <p class="block-desc">Оцени каждую зону честно. Это карта местности, а не оценка.</p>
+      <div class="gaps" id="gapsContainer"></div>
+      <div class="gap-summary">
+        <span>Итого: <b id="gapTotal">0</b> / 25</span>
+        <span>Уровень: <b id="gapLevel">—</b></span>
+      </div>
+      <button class="btn btn-primary" data-next="10">Сохранить карту</button>
+    </div>
+  </section>
+
+  <!-- ЭКРАН 10: ПЛАН -->
+  <section class="screen" data-screen="10">
+    <div class="screen-inner">
+      <h2 class="title-sec">Испытание: план</h2>
+      <p class="block-desc">Выбери одну красную зону. Напиши: что ты сделаешь, чтобы она стала зелёной к декабрю?</p>
+      <textarea id="planInput" placeholder="Моя красная зона — ___. К декабрю я сделаю её зелёной так: ___" rows="5"></textarea>
+      <button class="btn btn-primary" id="submitPlan">Отправить план</button>
+      <div class="reward hidden" id="planReward">✅ Принято. +2 кристалла.</div>
+    </div>
+  </section>
+
+  <!-- ЭКРАН 11: СЛОВО О ПРЕОДОЛЕНИИ -->
+  <section class="screen" data-screen="11">
+    <div class="screen-inner center">
+      <div class="tower-final"></div>
+      <blockquote class="quote">
+        «Сегодня ты не решил ни одной задачи ЕГЭ. Но ты сделал большее — ты узнал, где ты находишься.<br><br>
+        Большинство людей годами идут не туда, потому что боятся посмотреть на карту. Ты — посмотрел.<br><br>
+        <b>Ошибка — это не провал. Это разведданные.</b><br><br>
+        Врата Познания пройдены. Этаж 1 зажжён.»
+        <cite>— Профессор Мягкий</cite>
+      </blockquote>
+      <button class="btn btn-primary" data-next="12">Дальше</button>
+    </div>
+  </section>
+
+  <!-- ЭКРАН 12: ДЗ И АНОНС -->
+  <section class="screen" data-screen="12">
+    <div class="screen-inner">
+      <h2 class="title-sec">Задание до следующего занятия</h2>
+      <div class="hw">
+        <div class="hw-item"><span>1</span>Заполнить Карту пробелов (если не успел).</div>
+        <div class="hw-item"><span>2</span>Выбрать одну красную зону, найти 3 задачи.</div>
+        <div class="hw-item"><span>3</span>Написать в чат: «Моя цель на курс — ...»</div>
+        <div class="hw-item bonus"><span>+5</span>Бонус за сданное ДЗ.</div>
+      </div>
+      <div class="next-lesson">
+        <p>Следующее занятие: <b>Золотая Биржа · Вклады</b></p>
+        <p class="date">5.10.26 · 16:00</p>
+      </div>
+      <div class="final-cta">
+        <p class="final-quote">«Умным быть круто.»</p>
+        <p class="final-sign">— Профессор Мягкий</p>
+        <div class="cta-links">
+          <a href="https://vk.com/smartskillsmaria" target="_blank" rel="noopener" class="btn btn-ghost">Подписаться на группу</a>
+          <a href="https://vk.com/im/convo/-229273902?entrypoint=community_page&tab=all" target="_blank" rel="noopener" class="btn btn-gold">Написать Марии</a>
+        </div>
+      </div>
+      <button class="btn btn-primary" id="exportBtn">Скачать результаты</button>
+    </div>
+  </section>
+
+</main>
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   ДАННЫЕ ЗАДАНИЙ
+   ═══════════════════════════════════════════════════════ */
+const TASKS = {
+  algebra: [
+    { q: "Решите уравнение: 2x² − 5x + 3 = 0", a: ["1", "1.5", "1,5", "1;1.5", "1;1,5", "1 и 1.5", "1 и 1,5"] },
+    { q: "Решите неравенство: (x−3)/(x+1) ≤ 0. Ответ в виде интервала (например, (-1;3])", a: ["(-1;3]", "(-1,3]", "(-1; 3]", "(-1, 3]", "[-1;3]", "(-1;3]"] },
+    { q: "Найдите область определения: y = √(5 − 2x). Ответ: x ≤ ?", a: ["2.5", "2,5"] },
+    { q: "Решите уравнение: log₂(x + 3) = 4", a: ["13"] },
+    { q: "Решите уравнение: 3^(2x−1) = 27", a: ["2"] },
+    { q: "Решите неравенство: √(x+2) > x. Ответ в виде интервала", a: ["[-2;2)", "[-2; 2)", "-2;2)"] },
+    { q: "Найдите производную: f(x) = x³·ln x", a: ["x²(3lnx+1)", "x^2(3lnx+1)", "x²(3ln x+1)", "3x²lnx + x²", "x²(1+3lnx)"] },
+    { q: "Решите уравнение: sin x = 1/2. Общий вид", a: ["(-1)^n π/6 + πn", "(-1)^n*π/6+πn", "π/6+2πn; 5π/6+2πn"] },
+    { q: "Найдите наибольшее значение: y = −x² + 4x + 1", a: ["5"] },
+    { q: "Решите систему: x+y=5, xy=6. Ответ: (2;3) или (3;2)", a: ["(2;3),(3;2)", "(2;3) и (3;2)", "2;3", "3;2", "(3;2),(2;3)"] }
+  ],
+  economy: [
+    { q: "Вклад 100 000 руб. под 10% годовых с капитализацией. Сумма через 2 года?", a: ["121000", "121 000", "121000 руб"] },
+    { q: "Кредит 500 000 руб. на 3 года под 15% годовых. Годовой платёж (округли до тысяч)?", a: ["218000", "218 000", "217000", "218"] },
+    { q: "Прибыль: P(x) = −x² + 100x − 500. Найдите максимум.", a: ["2000", "2 000"] },
+    { q: "20% раствор + 50% раствор = 30% раствор. Пропорции (первый : второй)?", a: ["2:1", "2 : 1", "2к1"] },
+    { q: "Двое рабочих выполняют работу за 6 часов. Первый — за 10. За сколько второй?", a: ["15", "15 часов", "15ч"] }
+  ],
+  param: [
+    { q: "При каких a уравнение x² − 2ax + a² − 1 = 0 имеет два корня?", a: ["любых", "всех", "r", "любое a", "при любых a", "всегда", "a∈R", "любом"] },
+    { q: "При каких a неравенство ax² + 2x + 1 > 0 для всех x?", a: ["a>1", "a > 1", "(1;+∞)", "a>1"] },
+    { q: "При каких a уравнение |x−1| = a имеет ровно один корень?", a: ["0", "a=0", "при a=0"] },
+    { q: "При каких a система y=x², y=a имеет ровно 2 решения?", a: ["a>0", "a > 0", "(0;+∞)"] },
+    { q: "При каких a уравнение log_a x = x имеет решение?", a: ["(1;e^(1/e)]", "(1;e^1/e]", "1<a≤e^(1/e)", "a∈(1;e^(1/e)]"] }
+  ],
+  numbers: [
+    { q: "НОД и НОК чисел 84 и 126. Ответ: НОД=?, НОК=?", a: ["42 252", "42,252", "42;252", "42 и 252", "42 252"] },
+    { q: "Докажите, что n³ − n делится на 6. Ответ: 'да' если доказано", a: ["да", "yes", "доказано", "верно"] },
+    { q: "Решите в целых: 3x + 5y = 1. Общий вид x = 2 + 5k, y = ?", a: ["-1-3k", "-1 - 3k", "-1-3к"] },
+    { q: "Остаток от деления 2^100 на 7", a: ["2"] },
+    { q: "Сколько натуральных n, при которых n² + 1 делится на n + 1?", a: ["2", "два", "2 (n=1, n=2)"] }
+  ]
+};
+
+const ZONES = [
+  { key: "algebra", name: "Базовая алгебра", max: 10 },
+  { key: "economy", name: "Экономика", max: 5 },
+  { key: "param", name: "Параметр", max: 5 },
+  { key: "numbers", name: "Теория чисел", max: 5 }
+];
+
+/* ═══════════════════════════════════════════════════════
+   СОСТОЯНИЕ
+   ═══════════════════════════════════════════════════════ */
+const STATE = {
+  crystals: 0,
+  results: {
+    algebra: { correct: 0, total: 10 },
+    economy: { correct: 0, total: 5 },
+    param: { correct: 0, total: 5 },
+    numbers: { correct: 0, total: 5 }
+  },
+  gaps: { algebra: null, economy: null, param: null, numbers: null },
+  plan: "",
+  currentScreen: 1,
+  timers: {}
+};
+
+/* ═══════════════════════════════════════════════════════
+   ЗАГРУЗКА / СОХРАНЕНИЕ
+   ═══════════════════════════════════════════════════════ */
+function saveState(){
+  try{
+    localStorage.setItem("digital_fingerprint", JSON.stringify(STATE));
+  }catch(e){}
+}
+function loadState(){
+  try{
+    const saved = localStorage.getItem("digital_fingerprint");
+    if(saved){
+      const parsed = JSON.parse(saved);
+      Object.assign(STATE, parsed);
+    }
+  }catch(e){}
+}
+
+/* ═══════════════════════════════════════════════════════
+   КРИСТАЛЛЫ
+   ═══════════════════════════════════════════════════════ */
+function addCrystals(n){
+  STATE.crystals += n;
+  document.getElementById("crystalCount").textContent = STATE.crystals;
+  const ad = document.getElementById("adCrystals");
+  if(ad) ad.textContent = STATE.crystals;
+  saveState();
+}
+
+/* ═══════════════════════════════════════════════════════
+   ПРОГРЕСС
+   ═══════════════════════════════════════════════════════ */
+function updateProgress(screenNum){
+  const total = 12;
+  const percent = Math.max(8, Math.round((screenNum / total) * 100));
+  document.getElementById("progressFill").style.width = percent + "%";
+}
+
+/* ═══════════════════════════════════════════════════════
+   НАВИГАЦИЯ
+   ═══════════════════════════════════════════════════════ */
+function goToScreen(n){
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  const target = document.querySelector(`.screen[data-screen="${n}"]`);
+  if(target){
+    target.classList.add("active");
+    STATE.currentScreen = n;
+    updateProgress(n);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    saveState();
+
+    // Запуск таймера при входе на экраны диагностики
+    if(n >= 5 && n <= 8){
+      startTimer(target);
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   ТАЙМЕРЫ
+   ═══════════════════════════════════════════════════════ */
+function startTimer(screen){
+  const timerEl = screen.querySelector(".timer");
+  if(!timerEl) return;
+  const screenNum = screen.dataset.screen;
+  if(STATE.timers[screenNum]) return; // уже запущен
+
+  let timeLeft = parseInt(timerEl.dataset.time);
+  STATE.timers[screenNum] = true;
+
+  const interval = setInterval(() => {
+    if(!screen.classList.contains("active")){
+      clearInterval(interval);
+      return;
+    }
+    timeLeft--;
+    const min = Math.floor(timeLeft / 60);
+    const sec = timeLeft % 60;
+    timerEl.textContent = `${String(min).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
+    if(timeLeft <= 180) timerEl.classList.add("danger");
+    if(timeLeft <= 0){
+      clearInterval(interval);
+      timerEl.textContent = "00:00";
+    }
+  }, 1000);
+}
+
+/* ═══════════════════════════════════════════════════════
+   РЕНДЕР ЗАДАНИЙ
+   ═══════════════════════════════════════════════════════ */
+function normalize(str){
+  return String(str)
+    .toLowerCase()
+    .replace(/\s+/g, "")
+    .replace(/,/g, ".")
+    .replace(/[–—−]/g, "-")
+    .trim();
+}
+
+function renderTasks(blockKey, containerId){
+  const container = document.getElementById(containerId);
+  const tasks = TASKS[blockKey];
+  container.innerHTML = "";
+  tasks.forEach((task, idx) => {
+    const div = document.createElement("div");
+    div.className = "task";
+    div.dataset.idx = idx;
+    div.innerHTML = `
+      <div class="task-num">Задание ${idx + 1}</div>
+      <div class="task-q">${task.q}</div>
+      <div class="task-input">
+        <input type="text" placeholder="Твой ответ или прочерк" data-idx="${idx}">
+        <button data-check="${idx}">Проверить</button>
+      </div>
+      <div class="task-feedback"></div>
+    `;
+    container.appendChild(div);
+  });
+
+  // Обработчики
+  container.querySelectorAll("button[data-check]").forEach(btn => {
+    btn.addEventListener("click", () => checkAnswer(blockKey, container, parseInt(btn.dataset.check)));
+  });
+  container.querySelectorAll("input").forEach(input => {
+    input.addEventListener("keypress", e => {
+      if(e.key === "Enter"){
+        checkAnswer(blockKey, container, parseInt(input.dataset.idx));
+      }
+    });
+  });
+}
+
+function checkAnswer(blockKey, container, idx){
+  const task = container.querySelector(`.task[data-idx="${idx}"]`);
+  if(task.classList.contains("correct") || task.classList.contains("wrong") || task.classList.contains("skipped")) return;
+
+  const input = task.querySelector("input");
+  const feedback = task.querySelector(".task-feedback");
+  const value = input.value.trim();
+
+  if(value === "" || value === "-" || value === "—" || value === "прочерк"){
+    task.classList.add("skipped");
+    feedback.textContent = "Принято. Это тоже данные.";
+    feedback.className = "task-feedback skip";
+    return;
+  }
+
+  const correct = TASKS[blockKey][idx].a;
+  const normalized = normalize(value);
+  const isCorrect = correct.some(a => normalize(a) === normalized);
+
+  if(isCorrect){
+    task.classList.add("correct");
+    feedback.textContent = "✅ Верно! +2 кристалла.";
+    feedback.className = "task-feedback ok";
+    addCrystals(2);
+    STATE.results[blockKey].correct++;
+    saveState();
+  } else {
+    task.classList.add("wrong");
+    feedback.textContent = "Это данные. Запиши в карту.";
+    feedback.className = "task-feedback no";
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   КАРТА ПРОБЕЛОВ
+   ═══════════════════════════════════════════════════════ */
+function renderGaps(){
+  const container = document.getElementById("gapsContainer");
+  container.innerHTML = "";
+  ZONES.forEach(zone => {
+    const correct = STATE.results[zone.key].correct;
+    const total = STATE.results[zone.key].total;
+    const div = document.createElement("div");
+    div.className = "gap-row";
+    div.innerHTML = `
+      <div>
+        <div class="gap-name">${zone.name}</div>
+        <div class="gap-score">${correct} / ${total}</div>
+      </div>
+      <div class="gap-select">
+        <button class="gap-btn" data-zone="${zone.key}" data-level="green" title="Знаю">🟢</button>
+        <button class="gap-btn" data-zone="${zone.key}" data-level="yellow" title="Сомневаюсь">🟡</button>
+        <button class="gap-btn" data-zone="${zone.key}" data-level="red" title="Не знаю">🔴</button>
+      </div>
+      <div></div>
+    `;
+    container.appendChild(div);
+  });
+
+  container.querySelectorAll(".gap-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const zone = btn.dataset.zone;
+      const level = btn.dataset.level;
+      STATE.gaps[zone] = level;
+      container.querySelectorAll(`.gap-btn[data-zone="${zone}"]`).forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      updateGapSummary();
+      saveState();
+    });
+  });
+
+  // Восстановить выбор
+  ZONES.forEach(zone => {
+    const saved = STATE.gaps[zone.key];
+    if(saved){
+      const btn = container.querySelector(`.gap-btn[data-zone="${zone.key}"][data-level="${saved}"]`);
+      if(btn) btn.classList.add("active");
+    }
+  });
+
+  updateGapSummary();
+}
+
+function updateGapSummary(){
+  const total = ZONES.reduce((sum, z) => sum + STATE.results[z.key].correct, 0);
+  document.getElementById("gapTotal").textContent = total;
+  let level = "—";
+  if(total >= 22) level = "🟢 Мастер";
+  else if(total >= 15) level = "🟡 Знаток";
+  else if(total >= 8) level = "🟠 Ученик";
+  else level = "🔴 Новичок";
+  document.getElementById("gapLevel").textContent = level;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ПЛАН
+   ═══════════════════════════════════════════════════════ */
+function initPlan(){
+  const btn = document.getElementById("submitPlan");
+  const textarea = document.getElementById("planInput");
+  const reward = document.getElementById("planReward");
+
+  if(STATE.plan){
+    textarea.value = STATE.plan;
+    reward.classList.remove("hidden");
+  }
+
+  btn.addEventListener("click", () => {
+    const value = textarea.value.trim();
+    if(value.length < 10){
+      alert("Напиши план подробнее (минимум 10 символов).");
+      return;
+    }
+    STATE.plan = value;
+    reward.classList.remove("hidden");
+    addCrystals(2);
+    saveState();
+  });
+}
+
+/* ═══════════════════════════════════════════════════════
+   ЭКСПОРТ
+   ═══════════════════════════════════════════════════════ */
+function exportResults(){
+  const data = {
+    date: new Date().toISOString(),
+    crystals: STATE.crystals,
+    results: STATE.results,
+    gaps: STATE.gaps,
+    plan: STATE.plan,
+    totalCorrect: ZONES.reduce((sum, z) => sum + STATE.results[z.key].correct, 0)
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `digital-fingerprint-${Date.now()}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+/* ═══════════════════════════════════════════════════════
+   ФОНОВАЯ МУЗЫКА (Web Audio API — без файлов)
+   ═══════════════════════════════════════════════════════ */
+let audioCtx = null;
+let ambientNodes = null;
+
+function initAudio(){
+  if(audioCtx) return;
+  try{
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    startAmbient();
+  }catch(e){}
+}
+
+function startAmbient(){
+  if(!audioCtx || ambientNodes) return;
+  const master = audioCtx.createGain();
+  master.gain.value = 0.06;
+  master.connect(audioCtx.destination);
+
+  // Низкий дрон
+  const osc1 = audioCtx.createOscillator();
+  osc1.type = "sine";
+  osc1.frequency.value = 55;
+  const gain1 = audioCtx.createGain();
+  gain1.gain.value = 0.5;
+  osc1.connect(gain1).connect(master);
+
+  // Второй дрон
+  const osc2 = audioCtx.createOscillator();
+  osc2.type = "sine";
+  osc2.frequency.value = 82.4;
+  const gain2 = audioCtx.createGain();
+  gain2.gain.value = 0.3;
+  osc2.connect(gain2).connect(master);
+
+  // Мягкий фильтр
+  const filter = audioCtx.createBiquadFilter();
+  filter.type = "lowpass";
+  filter.frequency.value = 400;
+  master.disconnect();
+  master.connect(filter).connect(audioCtx.destination);
+
+  osc1.start();
+  osc2.start();
+
+  ambientNodes = { osc1, osc2, master, filter };
+}
+
+function stopAmbient(){
+  if(ambientNodes){
+    try{ ambientNodes.osc1.stop(); ambientNodes.osc2.stop(); }catch(e){}
+    ambientNodes = null;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   ИНИЦИАЛИЗАЦИЯ
+   ═══════════════════════════════════════════════════════ */
+document.addEventListener("DOMContentLoaded", () => {
+  loadState();
+  document.getElementById("crystalCount").textContent = STATE.crystals;
+  document.getElementById("adCrystals").textContent = STATE.crystals;
+
+  // Рендер заданий
+  renderTasks("algebra", "tasks-algebra");
+  renderTasks("economy", "tasks-economy");
+  renderTasks("param", "tasks-param");
+  renderTasks("numbers", "tasks-numbers");
+
+  // Карта пробелов
+  renderGaps();
+
+  // План
+  initPlan();
+
+  // Кнопки навигации
+  document.querySelectorAll("[data-next]").forEach(btn => {
+    btn.addEventListener("click", () => goToScreen(parseInt(btn.dataset.next)));
+  });
+
+  // Экспорт
+  document.getElementById("exportBtn").addEventListener("click", exportResults);
+
+  // Запуск музыки при первом клике
+  document.addEventListener("click", () => {
+    if(!audioCtx) initAudio();
+    else if(audioCtx.state === "suspended") audioCtx.resume();
+  }, { once: false });
+
+  // Восстановить текущий экран
+  if(STATE.currentScreen > 1){
+    goToScreen(STATE.currentScreen);
+  }
+
+  // Сохранение при выходе
+  window.addEventListener("beforeunload", saveState);
+
+  // Пауза музыки при потере фокуса
+  document.addEventListener("visibilitychange", () => {
+    if(document.hidden && ambientNodes){
+      try{ ambientNodes.master.gain.value = 0; }catch(e){}
+    } else if(!document.hidden && ambientNodes){
+      try{ ambientNodes.master.gain.value = 0.06; }catch(e){}
+    }
+  });
+});
+</script>
+</body>
+</html>
